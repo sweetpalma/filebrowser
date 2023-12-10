@@ -72,12 +72,19 @@ export default {
     this.fetchData();
   },
   watch: {
-    $route: "fetchData",
+    $route: async function () {
+      await this.fetchData();
+      if (this.currentView === 'listing') {
+        const scrollY = this.$store.state.listingScroll;
+        this.$store.commit("resetListingScroll");
+        window.scrollTo(0, scrollY);
+      }
+    },
     reload: function (value) {
       if (value === true) {
         this.fetchData();
       }
-    },
+    }
   },
   mounted() {
     window.addEventListener("keydown", this.keyEvent);
@@ -94,6 +101,8 @@ export default {
   methods: {
     ...mapMutations(["setLoading"]),
     async fetchData() {
+      const prevView = this.currentView;
+
       // Reset view information.
       this.$store.commit("setReload", false);
       this.$store.commit("resetSelected");

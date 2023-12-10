@@ -242,6 +242,8 @@ export default {
       this.addSelected(this.index);
     },
     open: function () {
+      const scrollY = window.scrollY;
+      this.$store.commit("setListingScroll", scrollY);
       this.$router.push({ path: this.url });
     },
   },

@@ -113,6 +113,12 @@ const mutations = {
     state.upload.speedMbyte = 0;
     state.upload.eta = 0;
   },
+  setListingScroll(state, value) {
+    state.listingScroll = value;
+  },
+  resetListingScroll(state) {
+    state.listingScroll = null;
+  }
 };
 
 export default mutations;
